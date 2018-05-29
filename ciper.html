@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<head>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!--<script src = "calculator.js"></script>-->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <center><h1>Caesar Cipher Encrypter/Decrypter</h1></center>
+    <h3>Message Received:</h3>
+    <textarea rows = "10" cols = "50" id = "myTextArea">
+    </textarea>
+    <h5>Shift:</h5>
+    <input type = "text" id = "shift">
+    <p></p>
+    <button type = "button" id = "caesar">Crack in Caesar!</button> 
+    <button type = "button" id = "vignere">Crack in Vignere!</button> 
+    <button type = "button" id = "ascii">Crack in ASCII!</button> 
+    <p></p>
+    <h3>Message Converted:</h3>
+    <textarea area rows = "10" cols = "50" id = "myTextArea2">
+    </textarea>
+    <script>
+        var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']; 
+        var encrypt = false; 
+        document.getElementById("caesar").onclick = function() {
+            var messageReceived = document.getElementById("myTextArea").value;
+            var mesRecTrim = messageReceived.trim(); 
+            var shiftFactor = document.getElementById("shift").value; 
+            var shiftNum = parseInt(shiftFactor); 
+            var character = 'a'; 
+            var shiftChar = 'a'; 
+            var capitalized = false; 
+            var characterNum = 0; 
+            var characterIndex = 0; 
+            var cipherIndex = 0; 
+            var resultStr = ""; 
+            var i = 0; 
+            for(i = 0; i < mesRecTrim.length; i++) {
+                character = mesRecTrim.charAt(i); 
+                characterNum = mesRecTrim.charCodeAt(i); 
+                if((characterNum < 65) || ((characterNum > 90) && (characterNum < 97)) || (characterNum > 122)) {
+                    resultStr = resultStr + character; 
+                }
+                else {
+                    shiftChar = character.toLowerCase(); 
+                    if((characterNum >= 65) && (characterNum <= 90)) {
+                        capitalized = true; 
+                    }
+                    if((characterNum >= 97) && (characterNum <= 122)) {
+                        capitalized = false; 
+                    }
+                    characterIndex = alphabet.indexOf(shiftChar); 
+                    cipherIndex = characterIndex + shiftNum; 
+                    if(cipherIndex > 25) {
+                        while(cipherIndex > 25) {
+                            cipherIndex = cipherIndex - 26; 
+                        }
+                    }
+                    if(cipherIndex < 0) {
+                        while(cipherIndex < 0) {
+                            cipherIndex = cipherIndex + 26; 
+                        }
+                    }
+                    shiftChar = alphabet[cipherIndex];
+                    if(capitalized) {
+                        shiftChar = shiftChar.toUpperCase(); 
+                    }
+                    resultStr = resultStr + shiftChar; 
+                }
+            }
+            document.getElementById("myTextArea2").value = resultStr;
+        }
+        document.getElementById("vignere").onclick = function() {
+            var messageReceived = document.getElementById("myTextArea").value; 
+            var mesRecTrim = messageReceived.trim(); 
+            var key = document.getElementById("shift").value; 
+            var keyTrim = key.trim(); 
+            var character = 'a'; 
+            var shiftChar = 'a'; 
+            var capitalized = false; 
+            var characterNum = 0; 
+            var characterIndex = 0; 
+            var cipherIndex = 0; 
+            var resultStr = ""; 
+            var keyIndex = 0; 
+            var keyChar = 'a'; 
+            var keyCharShift = 0; 
+            var i = 0; 
+            console.log(mesRecTrim.charAt(i)); 
+            for(i = 0; i < mesRecTrim; i++) {
+                console.log(i); 
+                character = mesRecTrim.charAt(i); 
+                characterNum = mesRecTrim.charCodeAt(i); 
+                if((characterNum < 65) || ((character > 90) && (character < 97)) || (character > 122)) {
+                    resultStr = resultStr + character; 
+                }
+                else {
+                    shiftChar = character.toLowerCase(); 
+                    if((characterNum >= 65) && (characterNum <= 90)) {
+                        capitalized = true; 
+                    }
+                    if((characterNum >= 97) && (characterNum <= 122)) {
+                        capitalized = false; 
+                    }
+                    characterIndex = alphabet.indexOf(shiftChar); 
+                    keyChar = keyTrim.charAt(keyIndex);
+                    keyCharShift = keyTrim.charCodeAt(keyIndex);
+                    cipherIndex = characterIndex + keyCharShift; 
+                    if(cipherIndex > 25) {
+                        while(cipherIndex > 25) {
+                            cipherIndex = cipherIndex - 26; 
+                        }
+                    }
+                    if(cipherIndex < 0) {
+                        while(cipherIndex < 0) {
+                            cipherIndex = cipherIndex + 26; 
+                        }
+                    }
+                    shiftChar = alphabet[cipherIndex];
+                    if(capitalized) {
+                        shiftChar = shiftChar.toUpperCase(); 
+                    }
+                    resultStr = resultStr + shiftChar; 
+                    keyIndex = keyIndex + 1; 
+                    if(keyIndex === keyTrim.length) {
+                        keyIndex = 0; 
+                    }
+                }
+            }
+            document.getElementById("myTextArea2").value = resultStr; 
+        }
+    </script> 
+</body>
