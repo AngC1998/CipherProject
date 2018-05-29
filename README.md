@@ -1,3 +1,3 @@
 "# CipherProject" 
 
-Status: Caesar Cipher and Vignere Cipher (finally) are functionally working. Currently working on ASCII substitution cipher now. 
+Status: Caesar Cipher, Vignere Cipher, and ASCII substitution cipher (finally) are functionally working. Need suggestions on what other ciphers to work on. 
