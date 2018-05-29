@@ -74,6 +74,8 @@
             document.getElementById("myTextArea2").value = resultStr;
         }
         document.getElementById("vignere").onclick = function() {
+            var encrypt = confirm("Should we encrypt this message?"); 
+            console.log(encrypt);
             var messageReceived = document.getElementById("myTextArea").value; 
             var mesRecTrim = messageReceived.trim(); 
             var key = document.getElementById("shift").value; 
@@ -89,9 +91,9 @@
             var keyChar = 'a'; 
             var keyCharShift = 0; 
             var i = 0; 
-            console.log(mesRecTrim.charAt(i)); 
+            //console.log(mesRecTrim.charAt(i)); 
             for(i = 0; i < mesRecTrim.length; i++) {
-                console.log(i); 
+                //console.log(i); 
                 character = mesRecTrim.charAt(i); 
                 characterNum = mesRecTrim.charCodeAt(i); 
                 if((characterNum < 65) || ((character > 90) && (character < 97)) || (character > 122)) {
@@ -108,7 +110,12 @@
                     characterIndex = alphabet.indexOf(shiftChar); 
                     keyChar = keyTrim.charAt(keyIndex);
                     keyCharShift = keyTrim.charCodeAt(keyIndex);
-                    cipherIndex = characterIndex + keyCharShift; 
+                    if(encrypt) {
+                        cipherIndex = characterIndex + keyCharShift; 
+                    }
+                    else {
+                        cipherIndex = characterIndex - keyCharShift; 
+                    }
                     if(cipherIndex > 25) {
                         while(cipherIndex > 25) {
                             cipherIndex = cipherIndex - 26; 
@@ -128,6 +135,34 @@
                     if(keyIndex === keyTrim.length) {
                         keyIndex = 0; 
                     }
+                }
+            }
+            document.getElementById("myTextArea2").value = resultStr; 
+        }
+        document.getElementById("ascii").onclick = function() {
+            var encrypt = confirm("Should we encrypt this message?"); 
+            var messageReceived = document.getElementById("myTextArea").value; 
+            var mesRecTrim = messageReceived.trim(); 
+            var receiveArr = []
+            if(!encrypt) {
+                receiveArr = mesRecTrim.split(" "); 
+            } 
+            var character = 'a'; 
+            var characterNum = 0; 
+            var resultStr = ""; 
+            var i = 0; 
+            if(encrypt) {
+                for(i = 0; i < mesRecTrim.length; i++) {
+                    character = mesRecTrim.charAt(i); 
+                    characterNum = mesRecTrim.charCodeAt(i); 
+                    resultStr = resultStr + characterNum + " "; 
+                }
+            }
+            else {
+                for(i = 0; i < receiveArr.length; i++) {
+                    characterNum = receiveArr[i]; 
+                    character = String.fromCharCode(characterNum); 
+                    resultStr = resultStr + character; 
                 }
             }
             document.getElementById("myTextArea2").value = resultStr; 
